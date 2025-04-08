@@ -8,29 +8,29 @@ on:
     branches:
       - main
 
-  permissions:
-    checks: write
-    contents: write
+permissions:
+  checks: write
+  contents: write
 
-  jobs:
-    run-linters:
-      name: Run linter
-      runs-on: ubuntu-24.04
+jobs:
+  run-linters:
+    name: Run linter
+    runs-on: ubuntu-24.04
 
-      steps:
-        - name: Checkout git repository
-          uses: actions/checkout@v4
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v4
 
-        - name: Set up NodeJS
-          uses: actions/setup-node@v4
-          with:
-            node-version: 22
+      - name: Set up NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-        - name: Install node dependencies
-          run: npm ci
+      - name: Install node dependencies
+        run: npm ci
 
-        - name: Run linters
-          uses: wearerequired/lint-action@v2
-          with:
-            eslint: true
-            prettier: true
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
+          prettier: true
