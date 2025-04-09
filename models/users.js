@@ -1,8 +1,8 @@
-"use strict";
-const { Model, Sequelize } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize'); // ignore no-unused-vars
 /**
  *
- * @param {Sequelize} sequelize
+ * @param {import('sequelize').Sequelize} sequelize
  * @param {import('sequelize').DataTypes} DataTypes
  * @returns
  */
@@ -13,26 +13,26 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate() {
       // define association here
     }
   }
   users.init(
     {
       email: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       password: {
-        type: DataTypes.STRING,
-      },
+        type: DataTypes.STRING
+      }
     },
     {
       sequelize,
-      modelName: "User",
-      tableName: "users",
+      modelName: 'User',
+      tableName: 'users',
       underscored: true,
       freezeTableName: true,
-      timestamps: false,
+      timestamps: false
     }
   );
   return users;
