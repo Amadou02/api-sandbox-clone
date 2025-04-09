@@ -1,29 +1,28 @@
-"use strict";
-
-const { QueryInterface } = require("sequelize");
+'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   /**
    *
-   * @param {QueryInterface} queryInterface
+   * @param {import('sequelize').QueryInterface} queryInterface
    * @param {import('sequelize').DataTypes} DataTypes
    * @returns void
    */
+  // ignore no-unused-vars
   async up(queryInterface, DataTypes) {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER
       },
       email: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       password: {
-        type: DataTypes.STRING,
-      },
+        type: DataTypes.STRING
+      }
     });
   },
 
@@ -33,7 +32,7 @@ module.exports = {
    * @param {import('sequelize').DataTypes} DataTypes
    * @returns void
    */
-  async down(queryInterface, DataTypes) {
-    await queryInterface.dropTable("users");
-  },
+  async down(queryInterface, _DataTypes) {
+    await queryInterface.dropTable('users');
+  }
 };
