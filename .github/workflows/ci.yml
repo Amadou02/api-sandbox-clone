@@ -60,7 +60,7 @@ jobs:
       - name: migrate test db and seed
         run: |
          npx sequelize-cli db:migrate
-         npx sequilize-cli db:seed
+         npx sequelize-cli db:seed
         env:
           DB_HOST: 127.0.0.1
           DB_PORT: 5432
