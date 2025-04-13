@@ -67,7 +67,7 @@ jobs:
       - name: Test PostgreSQL connection
         run: |
           PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -d postgres -c '\l'
-          
+
       - name: migrate test db and seed
         run: |
          npx sequelize-cli db:migrate
@@ -81,3 +81,6 @@ jobs:
           NODE_ENV: test
       - name: Run tests
         run: npm run test
+      - name: Show PostgreSQL logs (debug)
+        if: failure()
+        run: docker logs $(docker ps -q --filter ancestor=postgres)
