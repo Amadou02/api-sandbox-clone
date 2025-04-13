@@ -57,6 +57,17 @@ jobs:
           node-version: 22.x
       - name: Install dependencies
         run: npm ci
+      - name: Wait for PostgreSQL
+        run: |
+          for i in {1..10}; do
+            nc -z 127.0.0.1 5432 && echo "PostgreSQL is up!" && break
+            echo "Waiting for PostgreSQL..."
+            sleep 3
+          done
+      - name: Test PostgreSQL connection
+        run: |
+          PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -d postgres -c '\l'
+          
       - name: migrate test db and seed
         run: |
          npx sequelize-cli db:migrate
