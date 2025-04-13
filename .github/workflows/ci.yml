@@ -32,6 +32,14 @@ jobs:
 
   test:
     runs-on: ubuntu-22.04
+    # Env vars en global
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      NODE_ENV: test
     # service containers to run with runner-jobs
     services:
       postgres:
@@ -62,12 +70,12 @@ jobs:
         run: |
          npx sequelize-cli db:migrate
          npx sequelize-cli db:seed
-        env:
-          DB_HOST: 127.0.0.1
-          DB_PORT: 5432
-          DB_NAME: postgres
-          DB_USER: postgres
-          DB_PASSWORD: postgres
-          NODE_ENV: test
+        # env:
+        #   DB_HOST: 127.0.0.1
+        #   DB_PORT: 5432
+        #   DB_NAME: postgres
+        #   DB_USER: postgres
+        #   DB_PASSWORD: postgres
+        #   NODE_ENV: test
       - name: Run tests
         run: npm run test
