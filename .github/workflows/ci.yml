@@ -29,3 +29,53 @@ jobs:
         with:
           eslint: true
           prettier: true
+
+  test:
+    runs-on: ubuntu-22.04
+    # Env vars en global
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      NODE_ENV: test
+    # service containers to run with runner-jobs
+    services:
+      postgres:
+        # docker Hub image
+        image: postgres
+        # provide de password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: check out git repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      - name: Install dependencies
+        run: npm ci
+
+      - name: migrate test db and seed
+        run: |
+         npx sequelize-cli db:migrate
+         npx sequelize-cli db:seed
+        # env:
+        #   DB_HOST: 127.0.0.1
+        #   DB_PORT: 5432
+        #   DB_NAME: postgres
+        #   DB_USER: postgres
+        #   DB_PASSWORD: postgres
+        #   NODE_ENV: test
+      - name: Run tests
+        run: npm run test
