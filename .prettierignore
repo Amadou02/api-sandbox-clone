@@ -2,3 +2,7 @@ node_module
 doc
 .github
 coverage
+package.json
+package-lock.json
+*.yml
+eslint.config.js
